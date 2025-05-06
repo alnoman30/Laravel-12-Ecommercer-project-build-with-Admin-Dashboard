@@ -33,8 +33,8 @@ class HomeController extends Controller
 
     public function shop(){
         $products = Product::orderBy('created_at', 'DESC')->paginate(10);
-        $categories = Category::orderBy('id', 'desc')->paginate(10);
-        $brands = Brand::orderBy('id', 'desc')->paginate(10);
+        $categories = Category::withCount('products')->orderBy('id', 'desc')->paginate(10);
+        $brands = Brand::withCount('products')->orderBy('id', 'desc')->paginate(10);
         return view('pages.shop',compact('products', 'categories', 'brands'));
     }
 
