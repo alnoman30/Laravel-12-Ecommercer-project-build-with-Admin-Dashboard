@@ -13,6 +13,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/shop', [HomeController::class, 'shop'])->name('shop');
 Route::get('/shop/products/{product_slug}', [ProductController::class, 'products_details'])->name('products_details');
 Route::get('/shop/cart', [CartController::class, 'cart'])->name('cart');
+Route::post('/shop/add-cart', [CartController::class, 'add_to_cart'])->name('cart.add');
 Route::get('shop/cart/check-out', [CartController::class, 'checkout'])->name('checkout');
 Route::get('shop/cart/check-out/order-confirmation', [CartController::class, 'orderConfirmation'])->name('orderConfirmation');
 Route::get('/about', [HomeController::class, 'about'])->name('about');

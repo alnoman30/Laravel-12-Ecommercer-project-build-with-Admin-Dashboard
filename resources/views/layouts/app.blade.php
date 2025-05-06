@@ -273,11 +273,13 @@
               </a>
             </div>
       
-            <a href="#" class="header-tools__item header-tools__cart js-open-aside" data-aside="cartDrawer">
+            <a href="{{ route('cart')}}" class="header-tools__item header-tools__cart js-open-aside" data-aside="cartDrawer">
               <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <use href="#icon_cart" />
               </svg>
-              <span class="cart-amount d-block position-absolute js-cart-items-count">3</span>
+              @if (Cart::instance('cart')->content()->count()>0)
+                  <span class="cart-amount d-block position-absolute js-cart-items-count">{{Cart::instance('cart')->content()->count()}}</span>
+                  @endif
             </a>
           </div>
       
@@ -327,12 +329,23 @@
       
             <div class="border-top mt-auto pb-2">
               <div class="customer-links container mt-4 mb-2 pb-1">
-                <svg class="d-inline-block align-middle" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                @if (Auth::check())
+                    <svg class="d-inline-block align-middle" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <use href="#icon_user" />
+                  </svg>
+                  <a href="{{ route('dashboard')}}"><span class="d-inline-block ms-2 text-uppercase align-middle fw-medium">My Account</span></a>
+
+                  @else
+                  <svg class="d-inline-block align-middle" width="20" height="20" viewBox="0 0 20 20" fill="none"
                   xmlns="http://www.w3.org/2000/svg">
                   <use href="#icon_user" />
                 </svg>
-                <span class="d-inline-block ms-2 text-uppercase align-middle fw-medium">My Account</span>
+                <a href="{{ route('login')}}"><span class="d-inline-block ms-2 text-uppercase align-middle fw-medium">My Account</span></a>
+                @endif
+
               </div>
+              
       
       
       
@@ -461,11 +474,9 @@
                 </div>
 
                 @if(Auth::check())
-                <div class="header-tools__item hover-container">
-                  <a href="{{ route('dashboard')}}" >
+                  <a href="{{ route('dashboard')}}" style="margin-right: 0px;" >
                     <span><p class="d-inline" >{{Auth::user()->name}}</p></span>
                   </a>
-                </div>
                 @endif 
       
                 <div class="header-tools__item hover-container">
@@ -488,7 +499,10 @@
                     xmlns="http://www.w3.org/2000/svg">
                     <use href="#icon_cart" />
                   </svg>
-                  <span class="cart-amount d-block position-absolute js-cart-items-count">3</span>
+                  @if (Cart::instance('cart')->content()->count()>0)
+                  <span class="cart-amount d-block position-absolute js-cart-items-count">{{Cart::instance('cart')->content()->count()}}</span>
+                  @endif
+                 
                 </a>
               </div>
             </div>
@@ -629,7 +643,7 @@
             </div>
       
             <div class="col-4">
-              <a href="index.html" class="footer-mobile__link d-flex flex-column align-items-center">
+              <a href="{{ route('shop')}}" class="footer-mobile__link d-flex flex-column align-items-center">
                 <svg class="d-block" width="18" height="18" viewBox="0 0 18 18" fill="none"
                   xmlns="http://www.w3.org/2000/svg">
                   <use href="#icon_hanger" />
