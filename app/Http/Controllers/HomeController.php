@@ -39,10 +39,6 @@ class HomeController extends Controller
     }
 
 
-    public function cart(){
-        return view('pages.cart');
-    }
-
     public function about(){
         return view('pages.about');
     }

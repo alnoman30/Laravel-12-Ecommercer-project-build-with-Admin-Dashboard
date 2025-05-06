@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -11,7 +12,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/shop', [HomeController::class, 'shop'])->name('shop');
 Route::get('/shop/products/{product_slug}', [ProductController::class, 'products_details'])->name('products_details');
-Route::get('/cart', [HomeController::class, 'cart'])->name('cart');
+Route::get('/shop/cart', [CartController::class, 'cart'])->name('cart');
+Route::get('shop/cart/check-out', [CartController::class, 'checkout'])->name('checkout');
+Route::get('shop/cart/check-out/order-confirmation', [CartController::class, 'orderConfirmation'])->name('orderConfirmation');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('/wishlist', [HomeController::class, 'wishlist'])->name('wishlist');

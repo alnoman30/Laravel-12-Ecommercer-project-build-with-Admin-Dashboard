@@ -398,8 +398,10 @@
               <a href="{{ route('products_details', $r_prod->slug) }}">
                 <img loading="lazy" src="{{ asset('uploads/products')}}/{{ $r_prod->image}}" width="330" height="400"
                   alt="Cropped Faux leather Jacket" class="pc__img">
-                <img loading="lazy" src="{{ asset('uploads/products')}}/{{ $r_prod->image}}" width="330" height="400"
+                  @foreach (json_decode($r_prod->gallery_images) as $galleryImage )
+                  <img loading="lazy" src="{{ asset($galleryImage)}}" width="330" height="400"
                   alt="Cropped Faux leather Jacket" class="pc__img pc__img-second">
+                  @endforeach
               </a>
               <button
                 class="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
