@@ -341,16 +341,22 @@
                     <use href="#icon_next_sm" />
                   </svg></span>
               </div>
+              @if(Cart::instance('cart')->content()->where('id', $product->id)->count()>0)
+              <a href="{{ route('cart')}}" class="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium btn btn-warning">Go to cart</a>
+              @else
               <form method="POST" action="{{ route('cart.add') }}">
                 @csrf
                 <input type="hidden" name="id" value="{{ $product->id }}">
-                <input type="hidden" name="quantity" value="1"> {{-- or make it dynamic --}}
+                <input type="hidden" name="name" value="{{ $product->name }}">
+                <input type="hidden" name="quantity" value="1">
+                <input type="hidden" name="price" value="{{ $product->sale_price == '' ? $product->regular_price : $product->sale_price}}">
 
                 <button
                     type="submit"
-                    class="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart" data-aside="cartDrawer" title="Add To Cart">
+                    class="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium " data-aside="cartDrawer" title="Add To Cart">
                     Add To Cart</button>
             </form>
+            @endif
             </div>
 
             <div class="pc__info position-relative">
@@ -405,26 +411,10 @@
        
       </div>
 
-      <nav class="shop-pages d-flex justify-content-between mt-3" aria-label="Page navigation">
-        <a href="#" class="btn-link d-inline-flex align-items-center">
-          <svg class="me-1" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg">
-            <use href="#icon_prev_sm" />
-          </svg>
-          <span class="fw-medium">PREV</span>
-        </a>
-        <ul class="pagination mb-0">
-          <li class="page-item"><a class="btn-link px-1 mx-2 btn-link_active" href="#">1</a></li>
-          <li class="page-item"><a class="btn-link px-1 mx-2" href="#">2</a></li>
-          <li class="page-item"><a class="btn-link px-1 mx-2" href="#">3</a></li>
-          <li class="page-item"><a class="btn-link px-1 mx-2" href="#">4</a></li>
-        </ul>
-        <a href="#" class="btn-link d-inline-flex align-items-center">
-          <span class="fw-medium me-1">NEXT</span>
-          <svg width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg">
-            <use href="#icon_next_sm" />
-          </svg>
-        </a>
-      </nav>
+      <!-- Bootstrap 5 Pagination -->
+      <div class="d-flex justify-content-end">
+        {{ $products->links('pagination::bootstrap-5') }}
+      </div>
     </div>
   </section>
 </main>

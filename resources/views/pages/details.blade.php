@@ -113,9 +113,16 @@
         <div class="product-single__short-desc">
           <p>{{ $products->short_description }}</p>
         </div>
+
+        @if(Cart::instance('cart')->content()->where('id', $products->id)->count()>0)
+          <a href="{{ route('cart')}}" class="btn btn-warning mb-3">GO TO CART</a>
+
+        @else
         <form name="addtocart-form" method="post" action="{{ route('cart.add')}}">
           @csrf
           <input type="hidden" name="id" value="{{ $products->id }}">
+          <input type="hidden" name="name" value="{{ $products->name }}">
+          <input type="hidden" name="price" value="{{ $products->sale_price == '' ? $products->regular_price : $products->sale_price}}">
 
           <div class="product-single__addtocart">
             <div class="qty-control position-relative">
@@ -129,6 +136,8 @@
               Cart</button>
           </div>
         </form>
+        @endif
+
         <div class="product-single__addtolinks">
           <a href="#" class="menu-link menu-link_us-s add-to-wishlist"><svg width="16" height="16" viewBox="0 0 20 20"
               fill="none" xmlns="http://www.w3.org/2000/svg">

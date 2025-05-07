@@ -60,17 +60,17 @@
                   </div>
                 </td>
                 <td>
-                  <span class="shopping-cart__product-price">{{ $item->price }}</span>
+                  <span class="shopping-cart__product-price">${{ $item->price }}</span>
                 </td>
                 <td>
                   <div class="qty-control position-relative">
-                    <input type="number" name="quantity" value="1" min="1" class="qty-control__number text-center">
+                    <input type="number" name="quantity" value="{{ $item->qty }}" min="1" class="qty-control__number text-center">
                     <div class="qty-control__reduce">-</div>
                     <div class="qty-control__increase">+</div>
                   </div>
                 </td>
                 <td>
-                  <span class="shopping-cart__subtotal">{{ $item->subTotal()}}</span>
+                  <span class="shopping-cart__subtotal">${{ $item->subTotal()}}</span>
                 </td>
                 <td>
                   <a href="#" class="remove-cart">

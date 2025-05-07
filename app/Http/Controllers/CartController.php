@@ -23,7 +23,7 @@ class CartController extends Controller
             $product->id, 
             $product->name, 
             $request->quantity, 
-            $product->sale_price, 
+            $request->price, 
            
         )->associate(Product::class);
     
