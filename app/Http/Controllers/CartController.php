@@ -15,25 +15,22 @@ class CartController extends Controller
     }
 
     public function add_to_cart(Request $request)
-{
-    // Get product from the database
-    $product = Product::find($request->id);
+    {
+        $product = Product::findOrFail($request->id);
+    
 
-    // Check if the product exists
-    if ($product) {
-        // Add product to the cart
         Cart::instance('cart')->add(
-            $product->id,
-            $product->name,
-            $request->quantity,
-            $product->sale_price ?? $product->regular_price,
+            $product->id, 
+            $product->name, 
+            $request->quantity, 
+            $product->sale_price, 
            
-        )->associate(Product::class); // Associate the model
+        )->associate(Product::class);
+    
+       
+        return redirect()->back()->with('success', 'Product added to cart!');
     }
-
-    // Redirect back to the previous page
-    return redirect()->back();
-}
+    
     public function checkout(){
         return view('pages.check-out');
     }

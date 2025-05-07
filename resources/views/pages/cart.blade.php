@@ -46,7 +46,8 @@
               <tr>
                 <td>
                   <div class="shopping-cart__product-item">
-                    <img loading="lazy" src="{{ asset('uploads/products')}}/{{ $item->image }}" width="120" height="120" alt="{{ $item->name }}">
+                    <img loading="lazy" src="{{ asset('uploads/products/' . $item->model->image) }}" width="120" height="120" alt="">
+
                   </div>
                 </td>
                 <td>
@@ -63,13 +64,13 @@
                 </td>
                 <td>
                   <div class="qty-control position-relative">
-                    <input type="number" name="quantity" value="3" min="1" class="qty-control__number text-center">
+                    <input type="number" name="quantity" value="1" min="1" class="qty-control__number text-center">
                     <div class="qty-control__reduce">-</div>
                     <div class="qty-control__increase">+</div>
                   </div>
                 </td>
                 <td>
-                  <span class="shopping-cart__subtotal">$297</span>
+                  <span class="shopping-cart__subtotal">{{ $item->subTotal()}}</span>
                 </td>
                 <td>
                   <a href="#" class="remove-cart">
@@ -102,38 +103,21 @@
                 <tbody>
                   <tr>
                     <th>Subtotal</th>
-                    <td>$1300</td>
+                    <td>${{Cart::instance('cart')->subTotal()}}</td>
                   </tr>
                   <tr>
                     <th>Shipping</th>
                     <td>
-                      <div class="form-check">
-                        <input class="form-check-input form-check-input_fill" type="checkbox" value=""
-                          id="free_shipping">
-                        <label class="form-check-label" for="free_shipping">Free shipping</label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input form-check-input_fill" type="checkbox" value="" id="flat_rate">
-                        <label class="form-check-label" for="flat_rate">Flat rate: $49</label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input form-check-input_fill" type="checkbox" value=""
-                          id="local_pickup">
-                        <label class="form-check-label" for="local_pickup">Local pickup: $8</label>
-                      </div>
-                      <div>Shipping to AL.</div>
-                      <div>
-                        <a href="#" class="menu-link menu-link_us-s">CHANGE ADDRESS</a>
-                      </div>
+                      Free Shipping
                     </td>
                   </tr>
                   <tr>
                     <th>VAT</th>
-                    <td>$19</td>
+                    <td>${{Cart::instance('cart')->tax()}}</td>
                   </tr>
                   <tr>
                     <th>Total</th>
-                    <td>$1319</td>
+                    <td>${{Cart::instance('cart')->total()}}</td>
                   </tr>
                 </tbody>
               </table>

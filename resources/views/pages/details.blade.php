@@ -115,15 +115,16 @@
         </div>
         <form name="addtocart-form" method="post" action="{{ route('cart.add')}}">
           @csrf
+          <input type="hidden" name="id" value="{{ $products->id }}">
+
           <div class="product-single__addtocart">
             <div class="qty-control position-relative">
               <input type="number" name="quantity" value="1" min="1" class="qty-control__number text-center">
               <div class="qty-control__reduce">-</div>
               <div class="qty-control__increase">+</div>
             </div><!-- .qty-control -->
-            <input type="hidden" name="id" value="{{ $products->id }}">
-            <input type="hidden" name="name" value="{{ $products->name }}">
-            <input type="hidden" name="price" value="{{ $products->sale_price == '' ? $products->regular_price : $products->sale_price }}">
+            
+
             <button type="submit" class="btn btn-primary btn-addtocart" data-aside="cartDrawer">Add to
               Cart</button>
           </div>
