@@ -21,7 +21,7 @@ class CartController extends Controller
 
         Cart::instance('cart')->add(
             $product->id, 
-            $product->name, 
+            $product->name,
             $request->quantity, 
             $request->price, 
            
@@ -29,6 +29,36 @@ class CartController extends Controller
     
        
         return redirect()->back()->with('success', 'Product added to cart!');
+    }
+
+    public function increase_quantity(Request $request, $rowId){
+        $request->validate([
+            'quantity' => 'required|integer|min:1',
+        ]);
+        
+
+        $product = Cart::instance('cart')->get($rowId,);
+        $qty = $product->qty + $request->quantity;
+        Cart::instance('cart')->update($rowId,$qty);
+        return redirect()->back();
+    }
+    public function decrease_quantity(Request $request, $rowId){
+
+        $request->validate([
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        $product = Cart::instance('cart')->get($rowId);
+
+        $qty = $product->qty - $request->quantity;
+        Cart::instance('cart')->update($rowId,$qty);
+        return redirect()->back();
+    }
+
+    public function remove_cart_item($rowId){
+        Cart::instance('cart')->remove($rowId);
+
+        return redirect()->back()->with('success', 'Product removed from cart!');;
     }
     
     public function checkout(){

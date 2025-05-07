@@ -52,7 +52,7 @@
                 </td>
                 <td>
                   <div class="shopping-cart__product-item__detail">
-                    <h4>{{ $item->name}}</h4>
+                    <a href=""><h4>{{ $item->name}}</h4></a>
                     <ul class="shopping-cart__product-item__options">
                       <li>Color: Yellow</li>
                       <li>Size: L</li>
@@ -64,21 +64,39 @@
                 </td>
                 <td>
                   <div class="qty-control position-relative">
+                    
                     <input type="number" name="quantity" value="{{ $item->qty }}" min="1" class="qty-control__number text-center">
-                    <div class="qty-control__reduce">-</div>
-                    <div class="qty-control__increase">+</div>
+                    <form method="post" action="{{ route('cart.qty_decrease', $item->rowId) }}" class="qty-form">
+                      @csrf
+                      @method('PUT')
+                      <input type="hidden" name="quantity" value="1">
+                      <div class="qty-control__reduce">-</div>
+                    </form>
+                    
+                    <form method="post" action="{{ route('cart.qty_increase', $item->rowId) }}" class="qty-form">
+                      @csrf
+                      @method('PUT')
+                      <input type="hidden" name="quantity" value="1">
+                      <div class="qty-control__increase">+</div>
+                    </form>
                   </div>
                 </td>
                 <td>
                   <span class="shopping-cart__subtotal">${{ $item->subTotal()}}</span>
                 </td>
                 <td>
-                  <a href="#" class="remove-cart">
-                    <svg width="10" height="10" viewBox="0 0 10 10" fill="#767676" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M0.259435 8.85506L9.11449 0L10 0.885506L1.14494 9.74056L0.259435 8.85506Z" />
-                      <path d="M0.885506 0.0889838L9.74057 8.94404L8.85506 9.82955L0 0.97449L0.885506 0.0889838Z" />
-                    </svg>
-                  </a>
+                  <form action="{{ route('cart.item_remove', $item->rowId )}}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <a href="#" class="remove-cart">
+                      <svg width="10" height="10" viewBox="0 0 10 10" fill="#767676" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0.259435 8.85506L9.11449 0L10 0.885506L1.14494 9.74056L0.259435 8.85506Z" />
+                        <path d="M0.885506 0.0889838L9.74057 8.94404L8.85506 9.82955L0 0.97449L0.885506 0.0889838Z" />
+                      </svg>
+                    </a>
+
+                  </form>
+                  
                 </td>
               </tr> 
               @endforeach
@@ -141,4 +159,25 @@
       </div>
     </section>
   </main>
+  
 @endsection
+
+@push('scripts')
+<script>
+  $(function(){
+      // Handle the increase button click
+      $(".qty-control__increase").on("click", function(){
+          $(this).closest('form').submit();
+      });
+
+      // Handle the decrease button click
+      $(".qty-control__reduce").on("click", function(){
+          $(this).closest('form').submit();
+      });
+
+      $(".remove-cart").on("click", function(){
+          $(this).closest('form').submit();
+      });
+  });
+</script>
+@endpush

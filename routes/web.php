@@ -10,12 +10,21 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+
 Route::get('/shop', [HomeController::class, 'shop'])->name('shop');
 Route::get('/shop/products/{product_slug}', [ProductController::class, 'products_details'])->name('products_details');
 Route::get('/shop/cart', [CartController::class, 'cart'])->name('cart');
 Route::post('/shop/add-cart', [CartController::class, 'add_to_cart'])->name('cart.add');
+Route::put('/shop/cart/increase-quantity/{rowId}', [CartController::class, 'increase_quantity'])->name('cart.qty_increase');
+Route::put('/shop/cart/decrease-quantity/{rowId}', [CartController::class, 'decrease_quantity'])->name('cart.qty_decrease');
+Route::delete('/shop/cart/remove-item/{rowId}', [CartController::class, 'remove_cart_item'])->name('cart.item_remove');
 Route::get('shop/cart/check-out', [CartController::class, 'checkout'])->name('checkout');
 Route::get('shop/cart/check-out/order-confirmation', [CartController::class, 'orderConfirmation'])->name('orderConfirmation');
+
+
+
+
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('/wishlist', [HomeController::class, 'wishlist'])->name('wishlist');
